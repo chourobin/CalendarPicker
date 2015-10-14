@@ -186,23 +186,25 @@ var HeaderControls = React.createClass({
   getNext() {
     var next = this.state.selectedMonth + 1;
     if (next > 11) {
-      next = 0
-      this.props.getNextYear(next);
+      this.setState({ selectedMonth: 0 });
+      this.props.getNextYear();
+    } else {
+      this.setState({ selectedMonth: next });
     }
 
-    this.setState({ selectedMonth: next });
-    this.props.onMonthChange(next);
+    this.props.onMonthChange(this.state.selectedMonth);
   },
 
   getPrevious() {
     var prev = this.state.selectedMonth - 1;
     if (prev < 0) {
-      prev = 11;
-      this.props.getPrevYear(prev);
-    } 
+      this.setState({ selectedMonth: 11 });
+      this.props.getPrevYear();
+    } else {
+      this.setState({ selectedMonth: prev });
+    }
 
-    this.setState({ selectedMonth: prev });
-    this.props.onMonthChange(prev);
+    this.props.onMonthChange(this.state.selectedMonth);
   },
 
   render() {
@@ -251,38 +253,31 @@ var CalendarPicker = React.createClass({
 
   onDayChange(day) {
     this.setState({day: day.day,});
-    this.onDateChange({day: day.day,});
+    this.onDateChange();
   },
 
   onMonthChange(month) {
-    // Don't update the date on a year change.
-    if (Math.abs(month - this.state.month) != 11) {
-      this.onDateChange({month: month,});
-    }
     this.setState({month: month,});
+    this.onDateChange();
   },
 
-  getNextYear(month){
-    this.onDateChange({
-      year: this.state.year + 1,
-      month: month,
-    });
+  getNextYear(){
     this.setState({year: this.state.year + 1,});
+    this.onDateChange();
   },
 
-  getPrevYear(month) {
-    this.onDateChange({
-      year: this.state.year - 1,
-      month: month,
-    });
+  getPrevYear() {
     this.setState({year: this.state.year - 1,});
+    this.onDateChange();
   },
 
-  onDateChange(props) {
-    var year = typeof props.year == 'undefined' ? this.state.year : props.year,
-        month = typeof props.month == 'undefined' ? this.state.month : props.month,
-        day = typeof props.day == 'undefined' ? this.state.day : props.day,
-        date = new Date(year, month, day);
+  onDateChange() {
+    var {
+      day,
+      month,
+      year
+    } = this.state,
+      date = new Date(year, month, day);
 
     this.setState({date: date,});
     this.props.onDateChange(date);

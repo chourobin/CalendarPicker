@@ -8,7 +8,6 @@ var StyleSheet = require('react-native').StyleSheet;
 
 var styles = StyleSheet.create({
   calendar: {
-    height: 320,
     marginTop: 10
   },
   dayWrapper: {
@@ -18,8 +17,9 @@ var styles = StyleSheet.create({
   },
 
   dayButton: {
-    width: 50,
-    height: 40,
+    width: 30,
+    height: 30,
+    borderRadius: 15,
     alignSelf: 'center'
   },
 
@@ -77,7 +77,7 @@ var styles = StyleSheet.create({
   },
 
   headerWrapper: {
-    alignItems: 'center',  
+    alignItems: 'center',
     flexDirection: 'row',
     alignSelf: 'center',
     marginBottom: 10,
@@ -91,10 +91,12 @@ var styles = StyleSheet.create({
   },
 
   prev: {
+    paddingLeft: 10,
     textAlign: 'left'
   },
 
   next: {
+    paddingRight: 10,
     textAlign: 'right'
   },
 

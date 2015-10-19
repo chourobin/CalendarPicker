@@ -104,6 +104,13 @@ var Days = React.createClass({
   },
 
   onPressDay(day) {
+    // As part of the requirements, you cannot select a date in the future.
+    var now = new Date();
+    var newDate = new Date(this.props.year, this.props.month, day, 0, 0, 0);
+    if (newDate.getTime() > now.getTime()) {
+      return;
+    }
+
     this.updateSelectedStates(day);
     this.props.onDayChange({day: day});
   },
